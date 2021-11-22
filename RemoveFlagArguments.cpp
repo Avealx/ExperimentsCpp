@@ -10,96 +10,76 @@
  */
 
 #include <iostream>
-#include <string>
-#include <vector>
 
 using namespace std;
 
-struct BookingItems {
-    string name;
-    vector<string> items;
-};
+// Version 1: use of flag argument 'world' (bad practice)
 
-// Version 1: use of flag argument 'printDetail' (bad practice)
-
-struct Billing {
-    void createInvoice(BookingItems const & bookingItems, bool printDetail=false) const {
-        cout << "invoice for: " << bookingItems.name << "\n";
-        if (printDetail)
-            for (auto const & item : bookingItems.items)
-                cout << item << "\n";
+struct Greeter {
+    void greet(bool world=false) const {
+        cout << "Hello";
+        if (world)
+            cout << " world\n";
     }
 };
 
 // Version 2: split the computation branches into separate methods
 
-struct BillingSeparated {
-    void createInvoice(BookingItems const & bookingItems) const {
-        cout << "invoice for: " << bookingItems.name << "\n";
-    }
+struct GreeterSeparated {
+    void greet() const { cout << "Hello"; }
 
-    void createInvoiceWithDetail(BookingItems const & bookingItems) const {
-        createInvoice(bookingItems);
-        for (auto const & item : bookingItems.items)
-            cout << item << "\n";
+    void greetWorld() const {
+        greet();
+        cout << " world\n";
     }
 };
 
 // Version 3: split the computation branches into separate classes
 
-struct IBilling {
-    virtual void createInvoice(BookingItems const & bookingItems) const = 0;
-    virtual ~IBilling() {}
+struct IGreeter {
+    virtual void greet() const = 0;
+    virtual ~IGreeter() {}
 };
 
-struct SimpleBilling : IBilling{
-    virtual void createInvoice(BookingItems const & bookingItems) const override {
-        cout << "invoice for: " << bookingItems.name << "\n";
-    }
+struct SimpleGreeter : IGreeter{
+    virtual void greet() const override { cout << "Hello"; }
 };
 
-struct DetailedBilling : IBilling{
-    virtual void createInvoice(BookingItems const & bookingItems) const override {
-        simpleBilling.createInvoice(bookingItems);
-        addDetail(bookingItems);
+struct WorldGreeter : IGreeter{
+    virtual void greet() const override {
+        simpleGreeter.greet();
+        greetWorld();
     }
     private:
-    void addDetail(BookingItems const & bookingItems) const {
-        for (auto const & item : bookingItems.items)
-            cout << item << "\n";
-        }
-    SimpleBilling simpleBilling;
+    void greetWorld() const { cout << " world\n"; }
+    SimpleGreeter simpleGreeter;
 };
 
 
 int main() {
-    auto bookingItems = BookingItems{"MyItems", {"a house", "a Blouse", "and a mouse"}};
-
-    cout << "--------------\n";
-    cout << "basic billing:\n";
-    cout << "--------------\n";
-    auto bil = Billing{};
-    bil.createInvoice(bookingItems);
+    cout << "---------------\n";
+    cout << "basic greeting:\n";
+    cout << "---------------\n";
+    auto g = Greeter{};
+    g.greet();
     cout << "\n";
-    bool withDetail = true;
-    bil.createInvoice(bookingItems, withDetail);
+    bool world = true;
+    g.greet(world);
 
-    cout << "------------------\n";
-    cout << "billing separated:\n";
-    cout << "------------------\n";
-    auto bilS = BillingSeparated{};
-    bilS.createInvoice(bookingItems);
+    cout << "-------------------\n";
+    cout << "greeting separated:\n";
+    cout << "-------------------\n";
+    auto gS = GreeterSeparated{};
+    gS.greet();
     cout << "\n";
-    bilS.createInvoiceWithDetail(bookingItems);
+    gS.greetWorld();
 
-    cout << "--------------------\n";
-    cout << "billing Inheritance:\n";
-    cout << "--------------------\n";
-    auto bilSimple = SimpleBilling{};
-    bilSimple.createInvoice(bookingItems);
+    cout << "---------------------\n";
+    cout << "greeting Inheritance:\n";
+    cout << "---------------------\n";
+    SimpleGreeter{}.greet();
     cout << "\n";
-    auto bilDetail = DetailedBilling{};
-    bilDetail.createInvoice(bookingItems);
+    WorldGreeter{}.greet();
 }
 
 
