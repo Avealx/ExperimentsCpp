@@ -10,7 +10,6 @@
  */
 
 #include <iostream>
-
 using namespace std;
 
 // Version 1: use of flag argument 'world' (bad practice)
