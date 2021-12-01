@@ -4,7 +4,7 @@
  *
  * motivator: Clean C++ Chapter 01
  * To exchange a dependency (component that is depended on)
- * durin run-time. Useful to replace a real object by a mock
+ * during run-time. Useful to replace a real object by a mock
  * for testing.
  */
 
