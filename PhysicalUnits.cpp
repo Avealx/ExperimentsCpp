@@ -1,10 +1,12 @@
 /* physical unit handling at compile time.
  *
- * compile time computation, physical units
+ * compile time computation, physical units, user defined literals
  *
  * motivator: Clean C++ Chapter 05
  * Physical units can be expressed as classes so that the compiler
  * can assist in checking the computations and value assignments.
+ * Furthermore used defined literals allow to naturally refer to quantities
+ * with a unit by a suffix.
  */
 
 #include <iostream>
@@ -72,6 +74,20 @@ operator/(Value<MKS<ML,KL,SL>> const & lhs,
           Value<MKS<MR,KR,SR>> const & rhs) {
     return Value<MKS<ML-MR,KL-KR,SL-SR>>{lhs.magnitude() / rhs.magnitude()};
 }
+
+
+constexpr Force operator"" _N(long double magnitude) {
+    return Force{magnitude};
+}
+
+constexpr Acceleration operator"" _ms2(long double magnitude) {
+    return Acceleration{magnitude};
+}
+
+constexpr Time operator"" _s(long double magnitude) {
+    return Time{magnitude};
+}
+
 
 int main() {
     auto length = Length{2};
