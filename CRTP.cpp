@@ -1,6 +1,6 @@
 /* CRTP (curiously recurring template pattern)
  *
- * static polymorphism
+ * static polymorphism, design pattern
  *
  * motivator://www.grimm-jaud.de/index.php/blog/c-ist-doch-lazy
  *
