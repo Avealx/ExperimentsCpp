@@ -7,7 +7,7 @@
  * A technique that allows polymorphic use of classes that implement a common
  * interface but don't share a common base. The inheritance relation allowing
  * for polymorphic behaviour is encapsulated in a wrapper class. The code is
- * more intricated compared to classical dynamic polymorphism, but the
+ * more intricate compared to classical dynamic polymorphism, but the
  * resulting use later on is cleaner. (Compare with
  * TypeErasure_DynamicPolymorphism.cpp) */
 #include <iostream>

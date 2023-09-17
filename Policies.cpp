@@ -4,9 +4,9 @@
  *
  * motivator: Modern C++ Design - Generic Programming and Design Patterns Applied
  *
- * Like a compile time strategy pattern. Combiles (multiple) inheritance and
+ * Like a compile time strategy pattern. Compiles (multiple) inheritance and
  * generic programming to enable writing library code that allows users to
- * specify and extend behaviour withouth incurring runtime costs. */
+ * specify and extend behaviour without incurring runtime costs. */
 #include <iostream>
 using namespace std;
 
